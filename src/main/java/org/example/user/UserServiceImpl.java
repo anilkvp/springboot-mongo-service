@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -22,19 +23,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public User add(User user) throws DuplicateException {
         List<User> users = userRepository.findByUserName(user.getUsername());
-        if(users.isEmpty()){
+        if (Objects.isNull(users) || users.isEmpty()) {
             return userRepository.save(user);
         }
-        throw new DuplicateException("User with user name "+user.getUsername()+" already exists");
+        throw new DuplicateException("User with user name " + user.getUsername() + " already exists");
     }
 
     @Override
     public User update(User user) throws DuplicateException {
-        List<User> users = userRepository.findByUserName(user.getUsername());
-        if(users.isEmpty()){
-            return userRepository.save(user);
-        }
-        throw new DuplicateException("User with user name "+user.getUsername()+" already exists");
+        return userRepository.save(user);
     }
 
     @Override
@@ -43,7 +40,7 @@ public class UserServiceImpl implements UserService {
         if (optionalUser.isPresent()) {
             return optionalUser.get();
         }
-        throw new NotFoundException("Not resource found with id" + id);
+        throw new NotFoundException("Not resource found with id " + id);
     }
 
     @Override

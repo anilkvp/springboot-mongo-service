@@ -22,10 +22,12 @@ public class RestExceptionHandler  extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorEntity, HttpStatus.CONFLICT);
     }
 
+/*
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleDuplicateException(Exception exception){
         ErrorEntity errorEntity = new ErrorEntity(exception.getMessage());
         return new ResponseEntity<>(errorEntity, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+*/
 
 }
